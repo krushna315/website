@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Achievements - Tech Titans</title>
+    <meta name="description" content="Tech Titans PVPIT achievements and milestones in robotics competitions including ABU Robocon, Line Follower, and more.">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        /* ===== ACHIEVEMENTS PAGE STYLES ===== */
+        .achievements-hero {
+            text-align: center;
+            padding: 5rem 0 3rem;
+            position: relative;
+        }
+        .achievements-hero .section-title {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            background: linear-gradient(135deg, #FF8C00, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+        .achievements-hero .subtitle-text {
+            color: #C0C0C0;
+            font-size: 1.15rem;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            line-height: 1.7;
+        }
+        .achievements-stats {
+            display: flex;
+            justify-content: center;
+            gap: 2.5rem;
+            flex-wrap: wrap;
+            margin: 2rem 0 4rem;
+        }
+        .stat-bubble {
+            background: linear-gradient(135deg, rgba(255,140,0,0.12), rgba(255,215,0,0.06));
+            border: 1px solid rgba(255,140,0,0.3);
+            border-radius: 16px;
+            padding: 1.5rem 2rem;
+            text-align: center;
+            min-width: 130px;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .stat-bubble:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(255,140,0,0.25);
+        }
+        .stat-number {
+            font-family: 'Orbitron', monospace;
+            font-size: 2.2rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #FF8C00, #FFD700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+        }
+        .stat-label {
+            color: #C0C0C0;
+            font-size: 0.8rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-top: 0.4rem;
+        }
+
+        /* ===== ACHIEVEMENT CARDS GRID ===== */
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.8rem;
+            padding: 0 0 4rem;
+        }
+        .ach-card {
+            background: linear-gradient(135deg, rgba(28,28,46,0.85), rgba(20,20,35,0.9));
+            border: 1px solid rgba(255,140,0,0.15);
+            border-radius: 20px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(15px);
+            transition: transform 0.35s cubic-bezier(0.25,0.8,0.25,1), box-shadow 0.35s ease, border-color 0.35s ease;
+            cursor: default;
+        }
+        .ach-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #FF8C00, #FFD700, #FF4500);
+            opacity: 0;
+            transition: opacity 0.35s ease;
+        }
+        .ach-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(255,140,0,0.2), 0 0 0 1px rgba(255,140,0,0.3);
+            border-color: rgba(255,140,0,0.4);
+        }
+        .ach-card:hover::before {
+            opacity: 1;
+        }
+        .ach-card.featured {
+            grid-column: span 2;
+            background: linear-gradient(135deg, rgba(255,140,0,0.1), rgba(255,69,0,0.05), rgba(28,28,46,0.9));
+            border-color: rgba(255,140,0,0.35);
+        }
+        @media (max-width: 700px) {
+            .ach-card.featured { grid-column: span 1; }
+        }
+        .card-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1.2rem;
+        }
+        .card-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, rgba(255,140,0,0.2), rgba(255,69,0,0.1));
+            border: 1px solid rgba(255,140,0,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            flex-shrink: 0;
+            transition: transform 0.3s ease;
+        }
+        .ach-card:hover .card-icon {
+            transform: rotate(10deg) scale(1.1);
+        }
+        .card-icon .fa {
+            color: #FF8C00;
+        }
+        .card-title-group {
+            flex: 1;
+        }
+        .card-rank-badge {
+            display: inline-block;
+            font-family: 'Orbitron', monospace;
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 0.25rem 0.7rem;
+            border-radius: 50px;
+            background: linear-gradient(135deg, #FF8C00, #FFD700);
+            color: #0A0A0A;
+            margin-bottom: 0.5rem;
+        }
+        .card-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.3;
+            margin: 0;
+        }
+        .card-body p {
+            color: #aaa;
+            font-size: 0.93rem;
+            line-height: 1.65;
+            margin: 0 0 1rem;
+        }
+        .card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255,255,255,0.07);
+        }
+        .card-date {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            color: #FFD700;
+            font-size: 0.82rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+        }
+        .card-date .fa {
+            color: #FF8C00;
+        }
+        .card-score {
+            display: flex;
+            gap: 0.4rem;
+        }
+        .score-pip {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: rgba(255,140,0,0.25);
+            border: 1px solid rgba(255,140,0,0.4);
+        }
+        .score-pip.filled {
+            background: linear-gradient(135deg, #FF8C00, #FFD700);
+            border-color: transparent;
+        }
+
+        /* Robocon AIR special highlight */
+        .ach-card.gold-highlight {
+            border-color: rgba(255,215,0,0.4);
+            background: linear-gradient(135deg, rgba(255,215,0,0.07), rgba(255,140,0,0.05), rgba(28,28,46,0.9));
+        }
+        .ach-card.gold-highlight::before {
+            opacity: 1;
+            background: linear-gradient(90deg, #FFD700, #FF8C00, #FFD700);
+        }
+
+        /* Section divider */
+        .year-divider {
+            text-align: center;
+            margin: 3rem 0 2rem;
+            position: relative;
+        }
+        .year-divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,140,0,0.4), transparent);
+        }
+        .year-divider span {
+            position: relative;
+            display: inline-block;
+            font-family: 'Orbitron', monospace;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            color: #FF8C00;
+            background: var(--dark-bg-base, #0A0A0A);
+            padding: 0.3rem 1.5rem;
+            border: 1px solid rgba(255,140,0,0.3);
+            border-radius: 50px;
+        }
+
+        /* Score display for e-Yantra */
+        .score-list {
+            list-style: none;
+            padding: 0;
+            margin: 0.5rem 0 1rem;
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+        .score-list li {
+            background: rgba(255,140,0,0.1);
+            border: 1px solid rgba(255,140,0,0.25);
+            border-radius: 8px;
+            padding: 0.35rem 0.75rem;
+            font-size: 0.82rem;
+            color: #FFD700;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="custom-cursor-dot"></div>
+    <div class="custom-cursor-ring"></div>
+
+    <div class="bg-animation"></div>
+    <div class="geometry geometry-1"></div>
+    <div class="geometry geometry-2"></div>
+    <div class="geometry geometry-3"></div>
+
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">Tech Titans</a>
+            <ul class="nav-links" id="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="team.html">Team</a></li>
+                <li><a href="management.html">Management</a></li>
+                <li><a href="achievements.html" class="active">Achievements</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <button class="mobile-menu-toggle" id="mobile-menu-button" aria-label="Toggle menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <main>
+        <section class="section" id="achievements-page">
+            <div class="container">
+
+                <!-- ===== HERO ===== -->
+                <div class="achievements-hero">
+                    <h1 class="section-title reveal">Milestones &amp; Accolades</h1>
+                    <p class="subtitle-text reveal delay-1">Every award, every rank, every title — a testament to our relentless pursuit of excellence in robotics and engineering.</p>
+                </div>
+
+                <!-- ===== 2026 SECTION ===== -->
+                <div class="year-divider reveal"><span>&#9679; 2026 &#9679;</span></div>
+
+                <div class="achievements-grid">
+
+                    <!-- AIR 9 — 2026 -->
+                    <div class="ach-card gold-highlight featured reveal delay-1">
+                        <div class="card-header">
+                            <div class="card-icon"><i class="fa fa-trophy"></i></div>
+                            <div class="card-title-group">
+                                <span class="card-rank-badge">AIR 9 &#9733;</span>
+                                <h2 class="card-title">DD Robocon 2026</h2>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <p>Secured <strong style="color:#FFD700;">All India Rank 9</strong> at DD Robocon 2026, competing against top engineering institutions from across the nation. A stellar comeback performance on the national stage.</p>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-date"><i class="fa fa-calendar"></i> 2026</div>
+                            <div class="card-score">
+                                <div class="score-pip filled"></div><div class="score-pip filled"></div>
+                                <div class="score-pip filled"></div><div class="score-pip filled"></div>
+                                <div class="score-pip filled"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- ===== 2025 SECTION ===== -->
+                <div class="year-divider reveal"><span>&#9679; 2025 &#9679;</span></div>
+
+                <div class="achievements-grid">
+
+                    <!-- AIR 5 — 2025 -->
+                    <div class="ach-card gold-highlight featured reveal delay-1">
+                        <div class="card-header">
+                            <div class="card-icon"><i class="fa fa-trophy"></i></div>
+                            <div class="card-title-group">
+                                <span class="card-rank-badge">AIR 5 &#9733; Best Ever</span>
+                                <h2 class="card-title">DD Robocon 2025</h2>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <p>Our <strong style="color:#FFD700;">best national performance yet</strong> — All India Rank 5 at DD Robocon 2025! Placing Tech Titans firmly in the top 5 robotics teams in India. An extraordinary achievement marking years of relentless hard work and innovation.</p>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-date"><i class="fa fa-calendar"></i> 2025</div>
+                            <div class="card-score">
+                                <div class="score-pip filled"></div><div class="score-pip filled"></div>
+                                <div class="score-pip filled"></div><div class="score-pip filled"></div>
+                                <div class="score-pip filled"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- ===== 2024 SECTION ===== -->
+                <div class="year-divider reveal"><span>&#9679; 2024 &#9679;</span></div>
+
+                <div class="achievements-grid">
+
+                    <!-- AIR 15 — 2024 -->
+                    <div class="ach-card gold-highlight reveal delay-1">
+                        <div class="card-header">
+                            <div class="card-icon"><i class="fa fa-trophy"></i></div>
+                            <div class="card-title-group">
+                                <span class="card-rank-badge">AIR 15 &#9733;</span>
+                                <h2 class="card-title">DD Robocon 2024</h2>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <p>Secured <strong style="color:#FFD700;">All India Rank 15</strong> at DD Robocon 2024, competing against top engineering colleges from across the nation. A proud performance under the national spotlight.</p>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-date"><i class="fa fa-calendar"></i> November 2024</div>
+                            <div class="card-score">
+                                <div class="score-pip filled"></div><div class="score-pip filled"></div>
+                                <div class="score-pip filled"></div><div class="score-pip filled"></div>
+                                <div class="score-pip"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Line Follower 2024 -->
+                    <div class="ach-card reveal delay-2">
+                        <div class="card-header">
+                            <div class="card-icon"><i class="fa fa-road"></i></div>
+                            <div class="card-title-group">
+                                <span class="card-rank-badge">&#127941; Rank 1 &amp; 2</span>
+                                <h2 class="card-title">Line Follower Competition</h2>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <p>Dominated the 2024 Line Follower Tech Fest, sweeping both <strong style="color:#FFD700;">1st and 2nd position</strong> in a highly competitive robotics event. A clean podium sweep by Team Tech Titans.</p>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-date"><i class="fa fa-calendar"></i> 2024</div>
+                            <div class="card-score">
+                                <div class="score-pip filled"></div><div class="score-pip filled"></div>
+                                <div class="score-pip filled"></div><div class="score-pip filled"></div>
+                                <div class="score-pip filled"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- ===== 2023 SECTION ===== -->
+                <div class="year-divider reveal"><span>&#9679; 2023 &#9679;</span></div>
+
+                <div class="achievements-grid">
+
+                    <!-- AIR 9 — 2023 -->
+                    <div class="ach-card gold-highlight reveal delay-1">
+                        <div class="card-header">
+                            <div class="card-icon"><i class="fa fa-trophy"></i></div>
+                            <div class="card-title-group">
+                                <span class="card-rank-badge">AIR 9 &#9733; Best Ever</span>
+                                <h2 class="card-title">DD Robocon 2023</h2>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <p>Our <strong style="color:#FFD700;">best national performance</strong> — All India Rank 9 at DD Robocon 2023! A defining moment in Tech Titans history, placing us among India's top 10 robotics teams.</p>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-date"><i class="fa fa-calendar"></i> July 2023</div>
+                            <div class="card-score">
+                                <div class="score-pip filled"></div><div class="score-pip filled"></div>
+                                <div class="score-pip filled"></div><div class="score-pip filled"></div>
+                                <div class="score-pip filled"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ATV Robo Race 2023 -->
+                    <div class="ach-card reveal delay-2">
+                        <div class="card-header">
+                            <div class="card-icon"><i class="fa fa-flag-checkered"></i></div>
+                            <div class="card-title-group">
+                                <span class="card-rank-badge">&#127941; 1st Position</span>
+                                <h2 class="card-title">ATV Robo Race</h2>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <p>Secured <strong style="color:#FFD700;">First Position</strong> in the ATV Robo Race competition. Speed, precision, and mechanical ingenuity on full display.</p>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-date"><i class="fa fa-calendar"></i> November 2023</div>
+                            <div class="card-score">
+                                <div class="score-pip filled"></div><div class="score-pip filled"></div>
+                                <div class="score-pip filled"></div><div class="score-pip filled"></div>
+                                <div class="score-pip filled"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- e-Yantra -->
+                    <div class="ach-card reveal delay-3">
+                        <div class="card-header">
+                            <div class="card-icon"><i class="fa fa-microchip"></i></div>
+                            <div class="card-title-group">
+                                <span class="card-rank-badge">&#9881; Stage 2 Qualified</span>
+                                <h2 class="card-title">e-Yantra Competition</h2>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <p>Qualified through all three stages of this prestigious IIT Bombay competition with exceptional scores:</p>
+                            <ul class="score-list">
+                                <li>Stage 0: 100/100</li>
+                                <li>Stage 1: 100/100</li>
+                                <li>Stage 2: 98/100</li>
+                            </ul>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-date"><i class="fa fa-calendar"></i> 2023</div>
+                            <div class="card-score">
+                                <div class="score-pip filled"></div><div class="score-pip filled"></div>
+                                <div class="score-pip filled"></div><div class="score-pip filled"></div>
+                                <div class="score-pip filled"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Technothon -->
+                    <div class="ach-card reveal delay-4">
+                        <div class="card-header">
+                            <div class="card-icon"><i class="fa fa-bolt"></i></div>
+                            <div class="card-title-group">
+                                <span class="card-rank-badge">&#127941; Multiple Wins</span>
+                                <h2 class="card-title">Technothon</h2>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <p>Our members secured <strong style="color:#FFD700;">1st &amp; 2nd Rank</strong> in Robotrek tournament, and two teams claimed <strong style="color:#FFD700;">1st &amp; 3rd in Poster Making</strong> at Technothon.</p>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-date"><i class="fa fa-calendar"></i> Mar 2023</div>
+                            <div class="card-score">
+                                <div class="score-pip filled"></div><div class="score-pip filled"></div>
+                                <div class="score-pip filled"></div><div class="score-pip filled"></div>
+                                <div class="score-pip"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Robo-Race GSM -->
+                    <div class="ach-card reveal delay-1">
+                        <div class="card-header">
+                            <div class="card-icon"><i class="fa fa-flag"></i></div>
+                            <div class="card-title-group">
+                                <span class="card-rank-badge">&#127942; 2nd Place</span>
+                                <h2 class="card-title">Robo-Race Competition</h2>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <p>Secured <strong style="color:#FFD700;">2nd Rank</strong> in the Robot Racing competition hosted by Genba Sopanrao Moje College of Engineering, Pune — competing among dozens of teams.</p>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-date"><i class="fa fa-calendar"></i> Mar 2023</div>
+                            <div class="card-score">
+                                <div class="score-pip filled"></div><div class="score-pip filled"></div>
+                                <div class="score-pip filled"></div><div class="score-pip filled"></div>
+                                <div class="score-pip"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tech-It-Out -->
+                    <div class="ach-card featured reveal delay-2">
+                        <div class="card-header">
+                            <div class="card-icon"><i class="fa fa-star"></i></div>
+                            <div class="card-title-group">
+                                <span class="card-rank-badge">&#127941; Clean Sweep — 1st, 2nd &amp; 3rd</span>
+                                <h2 class="card-title">Tech-It-Out · Light Guided Robot Race (Line Follower)</h2>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <p>Tech Titans made history by conquering the <strong style="color:#FFD700;">Winner, Runner-Up, and 2nd Runner-Up</strong> positions in the 'Tech-It-Out' Light Guided Robot Race (Line Follower Bot) at the 'Tech 2K23' event held at Ajeenkya D. Y. Patil Innovation University, Lohegaon, Pune. A complete podium sweep!</p>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-date"><i class="fa fa-calendar"></i> Feb 2023</div>
+                            <div class="card-score">
+                                <div class="score-pip filled"></div><div class="score-pip filled"></div>
+                                <div class="score-pip filled"></div><div class="score-pip filled"></div>
+                                <div class="score-pip filled"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- ===== 2022 SECTION ===== -->
+                <div class="year-divider reveal"><span>&#9679; 2022 &#9679;</span></div>
+
+                <div class="achievements-grid">
+
+                    <!-- AIR 11 — 2022 -->
+                    <div class="ach-card gold-highlight reveal delay-1">
+                        <div class="card-header">
+                            <div class="card-icon"><i class="fa fa-trophy"></i></div>
+                            <div class="card-title-group">
+                                <span class="card-rank-badge">AIR 11 &#9733;</span>
+                                <h2 class="card-title">DD Robocon 2022</h2>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <p>Secured <strong style="color:#FFD700;">All India Rank 11</strong> at DD Robocon 2022 — continuing our tradition of top national finishes and solidifying Tech Titans as a premier robotics team.</p>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-date"><i class="fa fa-calendar"></i> July 2022</div>
+                            <div class="card-score">
+                                <div class="score-pip filled"></div><div class="score-pip filled"></div>
+                                <div class="score-pip filled"></div><div class="score-pip filled"></div>
+                                <div class="score-pip"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Best Reporting 2022 -->
+                    <div class="ach-card reveal delay-2">
+                        <div class="card-header">
+                            <div class="card-icon"><i class="fa fa-file-text"></i></div>
+                            <div class="card-title-group">
+                                <span class="card-rank-badge">&#127942; Special Award</span>
+                                <h2 class="card-title">Best Reporting Award</h2>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <p>Awarded the prestigious <strong style="color:#FFD700;">Best Reporting Award</strong> at DD Robocon 2022 — recognizing our team's exceptional documentation, clarity, and technical communication standards.</p>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-date"><i class="fa fa-calendar"></i> July 2022</div>
+                            <div class="card-score">
+                                <div class="score-pip filled"></div><div class="score-pip filled"></div>
+                                <div class="score-pip filled"></div><div class="score-pip filled"></div>
+                                <div class="score-pip filled"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- ===== 2021 SECTION ===== -->
+                <div class="year-divider reveal"><span>&#9679; 2021 &#9679;</span></div>
+
+                <div class="achievements-grid">
+
+                    <!-- Cozmo-Clench -->
+                    <div class="ach-card featured gold-highlight reveal delay-1">
+                        <div class="card-header">
+                            <div class="card-icon"><i class="fa fa-globe"></i></div>
+                            <div class="card-title-group">
+                                <span class="card-rank-badge">&#127758; 2nd &amp; 10th — Asian Continental</span>
+                                <h2 class="card-title">Cozmo-Clench International Tech-Fest</h2>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <p>Achieved <strong style="color:#FFD700;">2nd and 10th Rank</strong> in the Gripper Bot competition at the Cozmo-Clench International Tech-Fest — competing against <strong style="color:#FFD700;">172 participants from across the Asian continent</strong>. A true international stage performance!</p>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-date"><i class="fa fa-calendar"></i> Dec 2021</div>
+                            <div class="card-score">
+                                <div class="score-pip filled"></div><div class="score-pip filled"></div>
+                                <div class="score-pip filled"></div><div class="score-pip filled"></div>
+                                <div class="score-pip filled"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-text">
+                    <p>© 2027 Tech Titans Team. Shaping Tomorrow's Reality. Developed by Tech Titans.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

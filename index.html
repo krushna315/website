@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Tech Titans</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <!-- START: Custom Page Loader (Style 1: Boot-Up) -->
+    <div id="loader-wrapper">
+        <div class="loader-terminal">
+            <p class="line-1">> Initializing core systems...</p>
+            <p class="line-2">> Loading robotic assets... [OK]</p>
+            <p class="line-3">> Calibrating motion sensors... [OK]</p>
+            <p class="line-4">> Booting Titan OS...</p>
+            <div class="loader-logo-container">
+                <span class="loader-logo">TECH TITANS</span><span class="cursor">_</span>
+            </div>
+        </div>
+    </div>
+    <!-- END: Custom Page Loader -->
+
+    <!-- Custom Cursor Elements -->
+    <!-- Scroll Progress Bar -->
+    <div id="scroll-progress-bar"></div>
+
+    <div class="custom-cursor-dot"></div>
+    <div class="custom-cursor-ring"></div>
+
+    <!-- Animated Background Elements -->
+    <div class="bg-animation"></div>
+    <div class="geometry geometry-1"></div>
+    <div class="geometry geometry-2"></div>
+    <div class="geometry geometry-3"></div>
+
+    <!-- Main Site Structure -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">Tech Titans</a>
+            <ul class="nav-links" id="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="team.html">Team</a></li>
+                <li><a href="management.html">Management</a></li>
+                <li><a href="achievements.html">Achievements</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <button class="mobile-menu-toggle" id="mobile-menu-button" aria-label="Toggle menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero" id="home">
+            <div class="hero-content">
+                <h1><span class="hero-tech">TECH</span> <span class="hero-titans">TITANS</span></h1>
+                <div class="subtitle">One_Team_One_Dream</div>
+                <div class="tagline">We are Team Tech Titans from PVPIT, Pune—future engineers passionate about robotics. As ABU Robocon participants, we strive for excellence through precision, innovation, and teamwork. Aiming for DD Robocon 2025, we’re ready to build, inspire, and represent India on the global stage.</div>
+                <div class="cta-container">
+                    <div class="social-links">
+                        <a href="mailto:teamtechtitanspvpit@gmail.com" class="social-link" aria-label="Email"><span><i class="fa fa-envelope" aria-hidden="true"></i></span></a>
+                        <a href="https://in.linkedin.com/company/team-tech-titans" class="social-link" aria-label="LinkedIn"><span><i class="fa fa-linkedin" aria-hidden="true"></i></span></a>
+                        <a href="https://www.instagram.com/pvpit_robotics_lab/" class="social-link" aria-label="Instagram"><span><i class="fa fa-instagram"></i></span></a>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-visual-container">
+                <img src="images/logo2.gif" alt="Tech Titans Animated Logo" class="hero-logo-gif" draggable="false">
+            </div>
+        </section>
+
+        <section class="section" id="team-photo">
+            <div class="container">
+                <h2 class="section-title reveal">Titans in Action</h2>
+                <p class="team-photo-description reveal delay-1">
+                    United in purpose, driven by passion. This is the core team dedicated to pushing the boundaries of robotics and aiming for victory at ABU Robocon.
+                </p>
+                <div class="team-photo-slider reveal delay-2">
+                    <div class="slider-viewport">
+                        <ul class="slider-track">
+                            <li class="slider-slide current-slide"><img src="./images/Team25.jpg" alt="Tech Titans Team 2025"></li>
+                            <li class="slider-slide"><img src="./images/Tech_titans24.jpg" alt="Tech Titans Team 2024"></li>
+                            <li class="slider-slide"><img src="./images/team23.jpg" alt="Tech Titans at a competition in 2023"></li>
+                            <li class="slider-slide"><img src="./images/team22.jpg" alt="Tech Titans workshop in 2022"></li>
+                        </ul>
+                    </div>
+                    <button class="slider-button prev" aria-label="Previous image"><i class="fa fa-chevron-left" aria-hidden="true"></i></button>
+                    <button class="slider-button next" aria-label="Next image"><i class="fa fa-chevron-right" aria-hidden="true"></i></button>
+                    <div class="slider-nav"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-text">
+                    <p>© 2027 Tech Titans Team. Shaping Tomorrow's Reality. Developed by Tech Titans.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" aria-label="Back to top"><i class="fa fa-chevron-up"></i></button>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
