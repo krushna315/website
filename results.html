@@ -58,7 +58,7 @@
                 </div>
 
                 <!-- Lookup Form Card -->
-                <div id="results-lookup-card" class="results-form-card reveal delay-1">
+                <div id="results-form-card" class="results-form-card reveal delay-1">
                     <div class="results-form-header">
                         <h2 class="results-form-title">Check Your Result</h2>
                         <p class="results-form-desc">Both fields are required. Details must match exactly as submitted
@@ -284,23 +284,22 @@
         }
 
         // ── RESULT PUBLISH TOGGLE CONTROL ───────────────────────────
-        // Set RESULTS_ENABLED to true to ENABLE results lookup.
-        // Set RESULTS_ENABLED to false to TURN OFF results lookup across frontend.
+        // ✅ true  = Results portal is OPEN (candidates can check results)
+        // ❌ false = Results portal is CLOSED (shows offline notice)
         const RESULTS_ENABLED = false;
 
         // ── DOM References ─────────────────────────────────────────
-        const lookupCard = document.getElementById('results-lookup-card');
+        const formCard = document.getElementById('results-form-card');
         const disabledCard = document.getElementById('results-disabled-card');
-        const resultCard = document.getElementById('result-card');
         const form = document.getElementById('results-lookup-form');
-        const heroSubtitle = document.querySelector('.results-hero-subtitle');
 
-        // Initial check for results toggle state
-        if (!RESULTS_ENABLED) {
-            if (lookupCard) lookupCard.style.display = 'none';
-            if (resultCard) resultCard.style.display = 'none';
+        // Apply toggle on page load
+        if (RESULTS_ENABLED) {
+            if (formCard) formCard.style.display = 'block';
+            if (disabledCard) disabledCard.style.display = 'none';
+        } else {
+            if (formCard) formCard.style.display = 'none';
             if (disabledCard) disabledCard.style.display = 'block';
-            if (heroSubtitle) heroSubtitle.textContent = 'The recruitment result portal is currently offline. Please check back later.';
         }
         const submitBtn = document.getElementById('results-submit');
         const btnText = submitBtn.querySelector('.btn-text');
