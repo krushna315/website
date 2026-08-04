@@ -819,4 +819,32 @@ window.addEventListener('pageshow', function(event) {
             card.style.transform = '';
         });
     });
+})();
+
+// ---- Global Visitor Counter ----
+(function initVisitorCounter() {
+    const counterEl = document.getElementById('visitor-count-val');
+    if (!counterEl) return;
+
+    let hits = parseInt(localStorage.getItem('tt_visitor_count') || '254', 10);
+
+    if (!sessionStorage.getItem('tt_visited_session')) {
+        hits += 1;
+        sessionStorage.setItem('tt_visited_session', '1');
+        localStorage.setItem('tt_visitor_count', hits.toString());
+    }
+
+    counterEl.textContent = hits.toLocaleString();
+
+    // Async sync with public counter API
+    fetch('https://api.counterapi.dev/v1/techtitans-website-visitors/visits/up')
+        .then(res => res.json())
+        .then(data => {
+            if (data && typeof data.count !== 'undefined') {
+                const apiHits = Math.max(hits, Number(data.count));
+                localStorage.setItem('tt_visitor_count', apiHits.toString());
+                counterEl.textContent = apiHits.toLocaleString();
+            }
+        })
+        .catch(() => {});
 })();

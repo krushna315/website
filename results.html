@@ -131,15 +131,18 @@
                         </div>
                     </div>
 
-                    <!-- Candidate Details (Round / Remarks if present) -->
+                    <!-- Candidate Details (Round / Check Count / Remarks if present) -->
                     <div class="result-details-grid" id="result-details-grid" style="display:none;">
                         <div class="result-detail-item" id="result-round-row" style="display:none;">
                             <span class="result-detail-label"><i class="fa fa-flag-checkered"></i> Round</span>
                             <span class="result-detail-value" id="result-round">—</span>
                         </div>
+                        <div class="result-detail-item" id="result-check-count-row" style="display:none;">
+                            <span class="result-detail-label"><i class="fa fa-eye"></i> Result Lookups</span>
+                            <span class="result-detail-value" id="result-check-count-val">1 time</span>
+                        </div>
                         <div class="result-detail-item" id="result-remarks-row" style="display:none;">
-                            <span class="result-detail-label"><i class="fa fa-comment-o"></i> Remarks /
-                                Instructions</span>
+                            <span class="result-detail-label"><i class="fa fa-comment-o"></i> Remarks / Instructions</span>
                             <span class="result-detail-value" id="result-remarks">—</span>
                         </div>
                     </div>
@@ -172,6 +175,7 @@
             <div class="footer-content">
                 <div class="footer-text">
                     <p>© 2027 Tech Titans Team. Shaping Tomorrow's Reality. Developed by Tech Titans.</p>
+                    <p class="footer-visitor-badge"><i class="fa fa-users" aria-hidden="true"></i> Total Visitors: <span id="visitor-count-val">—</span></p>
                 </div>
             </div>
         </div>
@@ -448,6 +452,30 @@
                 hasDetails = true;
             } else {
                 resultRemarksRow.style.display = 'none';
+            }
+
+            // Candidate Result Lookups Counter
+            const checkCountRow = document.getElementById('result-check-count-row');
+            const checkCountVal = document.getElementById('result-check-count-val');
+            if (checkCountRow && checkCountVal) {
+                const candKey = (normalizeName(data.name) + '_' + normalizeDate(data.dob)).replace(/[^a-z0-9]/g, '');
+                let count = parseInt(localStorage.getItem('tt_chk_' + candKey) || '0', 10) + 1;
+                localStorage.setItem('tt_chk_' + candKey, count.toString());
+                checkCountVal.textContent = `${count} ${count === 1 ? 'time' : 'times'}`;
+                checkCountRow.style.display = 'flex';
+                hasDetails = true;
+
+                // Sync count online
+                fetch(`https://api.counterapi.dev/v1/techtitans-cand-${candKey}/check/up`)
+                    .then(res => res.json())
+                    .then(json => {
+                        if (json && typeof json.count !== 'undefined') {
+                            const apiCount = Math.max(count, Number(json.count));
+                            localStorage.setItem('tt_chk_' + candKey, apiCount.toString());
+                            checkCountVal.textContent = `${apiCount} ${apiCount === 1 ? 'time' : 'times'}`;
+                        }
+                    })
+                    .catch(() => {});
             }
 
             if (detailsGrid) {
