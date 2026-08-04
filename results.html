@@ -297,53 +297,49 @@
         // ── DOB Modern Date Picker (with Year & Month Dropdowns) ────
         const dobPicker = typeof flatpickr === 'function' ? flatpickr("#candidate-dob", {
             dateFormat: "d/m/Y",
-            defaultDate: "01/01/2006",
-            allowInput: true,
             maxDate: new Date(),
             disableMobile: true,
             monthSelectorType: "dropdown",
             onReady: function (selectedDates, dateStr, instance) {
-                const yearInput = instance.currentYearElement;
-                if (yearInput) {
+                const container = instance.calendarContainer;
+                const numWrapper = container.querySelector('.numInputWrapper');
+                if (numWrapper) {
+                    numWrapper.querySelectorAll('.arrowUp, .arrowDown').forEach(el => el.remove());
+
                     const select = document.createElement('select');
                     select.className = 'flatpickr-monthDropdown-months flatpickr-year-dropdown';
                     select.setAttribute('aria-label', 'Year');
 
-                    // Years list from 2026 down to 2000
                     const startYr = 2026;
-                    const endYr = 2000;
+                    const endYr = 1995;
+                    const curYr = instance.currentYear || 2006;
                     for (let y = startYr; y >= endYr; y--) {
                         const opt = document.createElement('option');
                         opt.value = y;
                         opt.textContent = y;
-                        if (y === instance.currentYear) opt.selected = true;
+                        if (y === curYr) opt.selected = true;
                         select.appendChild(opt);
                     }
 
-                    const numWrapper = instance.calendarContainer.querySelector('.numInputWrapper');
-                    if (numWrapper) {
-                        numWrapper.querySelectorAll('.arrowUp, .arrowDown').forEach(el => el.remove());
-                    }
-
-                    if (yearInput.parentNode) {
-                        yearInput.parentNode.replaceChild(select, yearInput);
-                    }
-
                     select.addEventListener('change', (e) => {
-                        instance.changeYear(parseInt(e.target.value, 10));
+                        const yr = parseInt(e.target.value, 10);
+                        instance.changeYear(yr);
                     });
 
-                    instance.currentYearElement = select;
+                    if (numWrapper.parentNode) {
+                        numWrapper.parentNode.replaceChild(select, numWrapper);
+                    }
+                    instance.customYearSelect = select;
                 }
             },
             onMonthChange: function (selectedDates, dateStr, instance) {
-                if (instance.currentYearElement && instance.currentYearElement.tagName === 'SELECT') {
-                    instance.currentYearElement.value = instance.currentYear;
+                if (instance.customYearSelect) {
+                    instance.customYearSelect.value = instance.currentYear;
                 }
             },
             onYearChange: function (selectedDates, dateStr, instance) {
-                if (instance.currentYearElement && instance.currentYearElement.tagName === 'SELECT') {
-                    instance.currentYearElement.value = instance.currentYear;
+                if (instance.customYearSelect) {
+                    instance.customYearSelect.value = instance.currentYear;
                 }
             }
         }) : null;
