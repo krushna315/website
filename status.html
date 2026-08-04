@@ -157,6 +157,13 @@
         // ── Load Result Data from sessionStorage ───────────────────
         document.addEventListener('DOMContentLoaded', () => {
             const rawData = sessionStorage.getItem('titanResult');
+            // ── RESULT PUBLISH TOGGLE CONTROL ───────────────────────────
+            const RESULTS_ENABLED = false;
+            if (!RESULTS_ENABLED) {
+                window.location.href = 'results.html';
+                return;
+            }
+
             if (!rawData) {
                 // If no result found in session, redirect to search page
                 window.location.href = 'results.html';
