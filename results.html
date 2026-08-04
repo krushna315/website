@@ -118,6 +118,21 @@
                     </div>
                 </div>
 
+                <!-- Results Disabled / Offline Card (Toggled via RESULTS_ENABLED flag) -->
+                <div id="results-disabled-card" class="results-form-card reveal delay-1" style="display:none; text-align: center; padding: 2.8rem 1.8rem;">
+                    <div style="width: 72px; height: 72px; margin: 0 auto 1.2rem; background: rgba(255, 140, 0, 0.15); border: 2px solid var(--golden-orange-start); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.1rem; color: var(--warm-gold);">
+                        <i class="fa fa-lock" aria-hidden="true"></i>
+                    </div>
+                    <h2 class="results-form-title" style="margin-bottom: 0.75rem;">Results Portal Offline</h2>
+                    <p class="results-form-desc" style="max-width: 540px; margin: 0 auto 1.5rem; font-size: 0.98rem; line-height: 1.6; color: rgba(255, 255, 255, 0.82);">
+                        The recruitment result portal is currently closed or undergoing evaluation updates. Please check back later or stay tuned to official Team Tech Titans announcements.
+                    </p>
+                    <div style="display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(255, 255, 255, 0.05); padding: 0.65rem 1.3rem; border-radius: 30px; border: 1px solid rgba(255, 255, 255, 0.12); font-size: 0.85rem; color: rgba(255, 255, 255, 0.75);">
+                        <i class="fa fa-envelope" style="color: var(--teal-cyan-start);"></i>
+                        <span>Contact Support: <a href="mailto:teamtechtitanspvpit@gmail.com" style="color: var(--teal-cyan-start); text-decoration: underline;">teamtechtitanspvpit@gmail.com</a></span>
+                    </div>
+                </div>
+
                 <!-- ===== RESULT CARD (shown inline after lookup) ===== -->
                 <div id="result-card" class="result-card reveal" style="display:none;" aria-live="polite">
 
@@ -268,9 +283,21 @@
             return str.toLowerCase().replace(/[^a-z0-9]/g, '');
         }
 
+        // ── RESULT PUBLISH TOGGLE CONTROL ───────────────────────────
+        // Set RESULTS_ENABLED to true to ENABLE results lookup.
+        // Set RESULTS_ENABLED to false to TURN OFF results lookup across frontend.
+        const RESULTS_ENABLED = true;
+
         // ── DOM References ─────────────────────────────────────────
         const formCard = document.querySelector('.results-form-card');
+        const disabledCard = document.getElementById('results-disabled-card');
         const form = document.getElementById('results-lookup-form');
+
+        // Initial check for results toggle state
+        if (!RESULTS_ENABLED) {
+            if (formCard) formCard.style.display = 'none';
+            if (disabledCard) disabledCard.style.display = 'block';
+        }
         const submitBtn = document.getElementById('results-submit');
         const btnText = submitBtn.querySelector('.btn-text');
         const btnLoader = submitBtn.querySelector('.btn-loader');
@@ -516,6 +543,11 @@
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
             hideError();
+
+            if (!RESULTS_ENABLED) {
+                showError('The recruitment results portal is currently offline.');
+                return;
+            }
 
             const dobRaw = document.getElementById('candidate-dob').value.trim();
             const motherName = document.getElementById('mother-name').value.trim();
