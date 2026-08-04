@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recruitment Status - Tech Titans</title>
+    <meta name="description" content="Official recruitment status for Team Tech Titans applicant.">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script>window.location.replace("results.html");</script>
+</head>
+
+<body>
+    <!-- Scroll Progress Bar -->
+    <div id="scroll-progress-bar"></div>
+
+    <div class="custom-cursor-dot"></div>
+    <div class="custom-cursor-ring"></div>
+
+    <div class="bg-animation"></div>
+    <div class="geometry geometry-1"></div>
+    <div class="geometry geometry-2"></div>
+    <div class="geometry geometry-3"></div>
+
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">Tech Titans</a>
+            <ul class="nav-links" id="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="team.html">Team</a></li>
+                <li><a href="management.html">Management</a></li>
+                <li><a href="achievements.html">Achievements</a></li>
+                <li><a href="results.html" class="active">Results</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <button class="mobile-menu-toggle" id="mobile-menu-button" aria-label="Toggle menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <main>
+        <section class="section" id="status-page">
+            <div class="container">
+
+                <!-- Hero -->
+                <div class="results-hero reveal">
+                    <h1 class="section-title">Official Candidate Status</h1>
+                    <p class="results-hero-subtitle">Recruitment decision published by Team Tech Titans evaluation
+                        committee.</p>
+                </div>
+
+                <!-- ===== RESULT CARD ===== -->
+                <div id="result-card" class="result-card reveal active" style="display:block;" aria-live="polite">
+
+                    <!-- Status Banner -->
+                    <div class="result-status-banner" id="result-banner">
+                        <div class="result-status-icon" id="result-icon"></div>
+                        <div class="result-status-text">
+                            <span class="result-status-label" id="result-status-label">STATUS</span>
+                            <h2 class="result-status-value" id="result-status-value">—</h2>
+                        </div>
+                    </div>
+
+                    <!-- Candidate Details Grid (Round / Remarks if present) -->
+                    <div class="result-details-grid" id="result-details-grid" style="display:none;">
+                        <div class="result-detail-item" id="result-round-row" style="display:none;">
+                            <span class="result-detail-label"><i class="fa fa-flag-checkered"></i> Round</span>
+                            <span class="result-detail-value" id="result-round">—</span>
+                        </div>
+                        <div class="result-detail-item" id="result-remarks-row" style="display:none;">
+                            <span class="result-detail-label"><i class="fa fa-comment-o"></i> Remarks /
+                                Instructions</span>
+                            <span class="result-detail-value" id="result-remarks">—</span>
+                        </div>
+                    </div>
+
+                    <!-- Announcement Box -->
+                    <div class="result-message-box" id="result-message-box">
+                        <div class="result-message-header">
+                            <span class="result-message-badge" id="result-message-badge"><i class="fa fa-star"></i>
+                                ANNOUNCEMENT</span>
+                        </div>
+                        <h3 class="result-message-title" id="result-message-title">—</h3>
+                        <p class="result-message-body" id="result-message-body">—</p>
+                    </div>
+                </div>
+
+                <!-- Info Notice -->
+                <div class="results-notice reveal delay-2">
+                    <i class="fa fa-info-circle" aria-hidden="true"></i>
+                    <p>Results are published by the Tech Titans recruitment committee. For queries, contact us at
+                        <a href="mailto:teamtechtitanspvpit@gmail.com">teamtechtitanspvpit@gmail.com</a>.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-text">
+                    <p>© 2027 Tech Titans Team. Shaping Tomorrow's Reality. Developed by Tech Titans.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" aria-label="Back to top"><i class="fa fa-chevron-up"></i></button>
+
+    <script>
+        // ── Party Popper Confetti Burst ─────────────────────────────
+        function launchPartyPopper() {
+            if (typeof confetti === 'function') {
+                var count = 300;
+                var defaults = { origin: { y: 0.6 } };
+
+                function fire(particleRatio, opts) {
+                    confetti(Object.assign({}, defaults, opts, {
+                        particleCount: Math.floor(count * particleRatio)
+                    }));
+                }
+
+                fire(0.25, { spread: 30, startVelocity: 65, colors: ['#FF8C00', '#FFD700', '#00CED1'] });
+                fire(0.2, { spread: 60, colors: ['#00FFFF', '#FF4500', '#FFFFFF', '#32CD64'] });
+                fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8, colors: ['#FF8C00', '#FFD700', '#1E90FF'] });
+                fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2, colors: ['#32CD64', '#FF8C00'] });
+                fire(0.1, { spread: 120, startVelocity: 50, colors: ['#FFD700', '#00CED1', '#FF4500'] });
+            } else {
+                createDOMConfetti();
+            }
+        }
+
+        function createDOMConfetti() {
+            const container = document.getElementById('result-card');
+            if (!container) return;
+            const colors = ['#FF8C00', '#FFD700', '#00CED1', '#32CD64', '#FF4500', '#00FFFF', '#1E90FF'];
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'confetti-particle';
+                particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                particle.style.left = (10 + Math.random() * 80) + '%';
+                particle.style.top = (10 + Math.random() * 40) + '%';
+                particle.style.animationDelay = (Math.random() * 0.5) + 's';
+                particle.style.transform = `rotate(${Math.random() * 360}deg)`;
+                container.appendChild(particle);
+                setTimeout(() => particle.remove(), 2500);
+            }
+        }
+
+        // ── Load Result Data from sessionStorage ───────────────────
+        document.addEventListener('DOMContentLoaded', () => {
+            const rawData = sessionStorage.getItem('titanResult');
+            if (!rawData) {
+                // If no result found in session, redirect to search page
+                window.location.href = 'results.html';
+                return;
+            }
+
+            let data;
+            try {
+                data = JSON.parse(rawData);
+            } catch (e) {
+                window.location.href = 'results.html';
+                return;
+            }
+
+            const resultBanner = document.getElementById('result-banner');
+            const resultIcon = document.getElementById('result-icon');
+            const resultStatusLbl = document.getElementById('result-status-label');
+            const resultStatusVal = document.getElementById('result-status-value');
+            const resultName = document.getElementById('result-name');
+            const resultDob = document.getElementById('result-dob');
+            const resultRoundRow = document.getElementById('result-round-row');
+            const resultRound = document.getElementById('result-round');
+            const resultRemarksRow = document.getElementById('result-remarks-row');
+            const resultRemarks = document.getElementById('result-remarks');
+
+            const resultMessageBox = document.getElementById('result-message-box');
+            const resultMessageBadge = document.getElementById('result-message-badge');
+            const resultMessageTitle = document.getElementById('result-message-title');
+            const resultMessageBody = document.getElementById('result-message-body');
+
+            const candidateName = (data.name || 'Candidate').trim().toUpperCase();
+            resultName.textContent = data.name || 'Candidate';
+            resultDob.textContent = data.dob || '—';
+
+            if (data.round && data.round.trim()) {
+                resultRound.textContent = data.round;
+                resultRoundRow.style.display = 'flex';
+            }
+            if (data.remarks && data.remarks.trim()) {
+                resultRemarks.textContent = data.remarks;
+                resultRemarksRow.style.display = 'flex';
+            }
+
+            const status = (data.status || '').toLowerCase().trim();
+
+            if (status === 'selected') {
+                resultBanner.classList.add('status-selected');
+                resultMessageBox.classList.add('status-selected');
+                resultIcon.innerHTML = '<i class="fa fa-trophy" aria-hidden="true"></i>';
+                resultStatusLbl.textContent = 'CONGRATULATIONS';
+                resultStatusVal.style.display = 'block';
+                resultStatusVal.textContent = 'SELECTED';
+
+                resultMessageBadge.style.display = 'inline-flex';
+                resultMessageBadge.innerHTML = '<i class="fa fa-star"></i> OFFICIAL SELECTION LETTER';
+                resultMessageTitle.textContent = 'Welcome to Team Tech Titans!';
+                resultMessageBody.innerHTML = `
+                    <p><strong>Dear ${candidateName},</strong></p>
+                    <p>After an intense week-long journey filled with meticulous workshops, challenging tasks, and technical evaluations, we are proud to inform you that you have secured your place in <strong>Team Tech Titans</strong>.</p>
+                    <p>This is not just a selection—it's a big achievement. Out of many passionate and talented candidates, only a very limited few were selected to join our team. Your persistence, ability to learn, and spirit of collaboration have set you apart.</p>
+                    <p>But remember—this is only the beginning. As a Tech Titan, you now step into a world of hard work, deep research, and constant learning. Ahead, you will push boundaries, explore cutting-edge technologies, and grow into a true innovator. The journey will be demanding, but it will also be rewarding beyond measure.</p>
+                    <p>Welcome to the Tech Titans family. Wear this achievement with pride, and prepare yourself for the exciting challenges and opportunities that lie ahead.</p>
+                    <p class="letter-signature"><strong>Best Wishes,</strong><br><span class="titans-signature">Team Tech Titans</span></p>
+                `;
+
+                // Fire Party Popper / Confetti Effect!
+                setTimeout(launchPartyPopper, 200);
+                setTimeout(launchPartyPopper, 800);
+            } else {
+                resultBanner.classList.add('status-not-selected');
+                resultMessageBox.classList.add('status-not-selected');
+                resultIcon.innerHTML = '<i class="fa fa-compass" aria-hidden="true"></i>';
+                resultStatusLbl.textContent = 'RECRUITMENT UPDATE';
+                resultStatusVal.style.display = 'none';
+                resultStatusVal.textContent = '';
+
+                resultMessageBadge.style.display = 'none';
+                resultMessageTitle.textContent = 'Thank You for Applying';
+                resultMessageBody.innerHTML = `
+                    <p><strong>Dear ${candidateName},</strong></p>
+                    <p>Over the past week, you have been an important part of our journey through meticulous workshops, hands-on hardware and software tasks, and team-based challenges. We deeply value the passion, effort, and energy you invested during this time.</p>
+                    <p>After careful consideration, we regret to inform you that you have not been selected for the final Tech Titans team this season. The decision was not easy—there were only a very limited number of spots available, and due to space constraints in our lab for daily work, we could not accommodate everyone.</p>
+                    <p>Please understand that our motto is not to reject anyone, but to ensure that those selected have the resources and space they need to work effectively. This does not mean the end of your journey with us—we strongly encourage you to keep building, learning, and sharpening your technical skills, and we warmly invite you to apply again in our future recruitment drives.</p>
+                    <p class="letter-signature"><strong>Warm Regards,</strong><br><span class="titans-signature">Team Tech Titans</span></p>
+                `;
+            }
+        });
+    </script>
+
+    <script src="js/script.js"></script>
+</body>
+
+</html>

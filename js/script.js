@@ -1,3 +1,32 @@
+// ── SITE-WIDE SECURITY DEFENSES (ALL PAGES) ────────────────
+(function () {
+    // Disable Right-Click Context Menu
+    document.addEventListener('contextmenu', function (e) {
+        e.preventDefault();
+        return false;
+    });
+
+    // Disable Inspect Keyboard Shortcuts: F12, Ctrl+Shift+I/J/C, Ctrl+U, Ctrl+S
+    document.addEventListener('keydown', function (e) {
+        if (
+            e.keyCode === 123 || 
+            (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) ||
+            (e.ctrlKey && (e.keyCode === 85 || e.keyCode === 83))
+        ) {
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
+        }
+    });
+
+    // Periodically clear console output
+    if (window.console) {
+        setInterval(function () {
+            console.clear();
+        }, 2500);
+    }
+})();
+
 // Navbar Scroll Effect
 const navbar = document.getElementById('navbar');
 if (navbar) {

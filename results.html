@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recruitment Results - Tech Titans</title>
+    <meta name="description"
+        content="Check your Tech Titans recruitment result. Enter your Application ID and Full Name to see your selection status.">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/dark.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+</head>
+
+<body>
+    <!-- Scroll Progress Bar -->
+    <div id="scroll-progress-bar"></div>
+
+    <div class="custom-cursor-dot"></div>
+    <div class="custom-cursor-ring"></div>
+
+    <div class="bg-animation"></div>
+    <div class="geometry geometry-1"></div>
+    <div class="geometry geometry-2"></div>
+    <div class="geometry geometry-3"></div>
+
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">Tech Titans</a>
+            <ul class="nav-links" id="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="team.html">Team</a></li>
+                <li><a href="management.html">Management</a></li>
+                <li><a href="achievements.html">Achievements</a></li>
+                <li><a href="results.html" class="active">Results</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <button class="mobile-menu-toggle" id="mobile-menu-button" aria-label="Toggle menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <main>
+        <section class="section" id="results-page">
+            <div class="container">
+
+                <!-- Page Hero -->
+                <div class="results-hero reveal">
+                    <h1 class="section-title">Recruitment Results</h1>
+                    <p class="results-hero-subtitle">Enter your credentials below to check your selection status for
+                        Team Tech Titans.</p>
+                </div>
+
+                <!-- Lookup Form Card -->
+                <div class="results-form-card reveal delay-1">
+                    <div class="results-form-header">
+                        <h2 class="results-form-title">Check Your Result</h2>
+                        <p class="results-form-desc">Both fields are required. Details must match exactly as submitted
+                            in your application.</p>
+                    </div>
+
+                    <form id="results-lookup-form" autocomplete="off" novalidate>
+                        <div class="results-form-group">
+                            <label for="candidate-dob">
+                                <i class="fa fa-calendar" aria-hidden="true"></i>
+                                Date of Birth
+                            </label>
+                            <div class="results-input-wrapper">
+                                <input type="text" id="candidate-dob" name="candidateDob"
+                                    placeholder="Select Date of Birth (DD/MM/YYYY)" required autocomplete="off" readonly
+                                    style="cursor: pointer;">
+                                <button type="button" class="dob-calendar-icon-btn" id="dob-picker-btn"
+                                    aria-label="Open date picker" title="Select Date of Birth">
+                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                </button>
+                                <div class="input-glow"></div>
+                            </div>
+                            <span class="results-field-hint">Click anywhere on the input box to open the date
+                                picker</span>
+                        </div>
+
+                        <div class="results-form-group">
+                            <label for="mother-name">
+                                <i class="fa fa-heart" aria-hidden="true"></i>
+                                Mother's Name
+                            </label>
+                            <div class="results-input-wrapper">
+                                <input type="text" id="mother-name" name="motherName"
+                                    placeholder="Enter your mother's full name" required autocomplete="off"
+                                    spellcheck="false">
+                                <div class="input-glow"></div>
+                            </div>
+                            <span class="results-field-hint">Enter mother's name exactly as submitted in the application
+                                form.</span>
+                        </div>
+
+                        <button type="submit" class="results-submit-btn" id="results-submit">
+                            <span class="btn-text">
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                                &nbsp;Check Result
+                            </span>
+                            <span class="btn-loader" style="display:none;">
+                                <i class="fa fa-circle-o-notch fa-spin" aria-hidden="true"></i>
+                                &nbsp;Searching…
+                            </span>
+                        </button>
+                    </form>
+
+                    <!-- Error Message -->
+                    <div id="results-error" class="results-message results-error" style="display:none;" role="alert">
+                        <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                        <span id="results-error-text"></span>
+                    </div>
+                </div>
+
+                <!-- ===== RESULT CARD (shown inline after lookup) ===== -->
+                <div id="result-card" class="result-card reveal" style="display:none;" aria-live="polite">
+
+                    <!-- Status Banner -->
+                    <div class="result-status-banner" id="result-banner">
+                        <div class="result-status-icon" id="result-icon"></div>
+                        <div class="result-status-text">
+                            <span class="result-status-label" id="result-status-label">STATUS</span>
+                            <h2 class="result-status-value" id="result-status-value">—</h2>
+                        </div>
+                    </div>
+
+                    <!-- Candidate Details (Round / Remarks if present) -->
+                    <div class="result-details-grid" id="result-details-grid" style="display:none;">
+                        <div class="result-detail-item" id="result-round-row" style="display:none;">
+                            <span class="result-detail-label"><i class="fa fa-flag-checkered"></i> Round</span>
+                            <span class="result-detail-value" id="result-round">—</span>
+                        </div>
+                        <div class="result-detail-item" id="result-remarks-row" style="display:none;">
+                            <span class="result-detail-label"><i class="fa fa-comment-o"></i> Remarks /
+                                Instructions</span>
+                            <span class="result-detail-value" id="result-remarks">—</span>
+                        </div>
+                    </div>
+
+                    <!-- Candidate Announcement Message Box -->
+                    <div class="result-message-box" id="result-message-box">
+                        <div class="result-message-header">
+                            <span class="result-message-badge" id="result-message-badge"><i class="fa fa-star"></i>
+                                OFFICIAL ANNOUNCEMENT</span>
+                        </div>
+                        <h3 class="result-message-title" id="result-message-title">—</h3>
+                        <div class="result-message-body" id="result-message-body">—</div>
+                    </div>
+                </div>
+
+                <!-- Info Notice -->
+                <div class="results-notice reveal delay-2">
+                    <i class="fa fa-info-circle" aria-hidden="true"></i>
+                    <p>Results are published by the Tech Titans recruitment committee. For queries, contact us at
+                        <a href="mailto:teamtechtitanspvpit@gmail.com">teamtechtitanspvpit@gmail.com</a>.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-text">
+                    <p>© 2027 Tech Titans Team. Shaping Tomorrow's Reality. Developed by Tech Titans.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" aria-label="Back to top"><i class="fa fa-chevron-up"></i></button>
+
+    <script>
+        // ── CLIENT SECURITY DEFENSES ───────────────────────────────
+        (function () {
+            // Disable Right-Click Context Menu
+            document.addEventListener('contextmenu', function (e) {
+                e.preventDefault();
+                return false;
+            });
+
+            // Disable Inspect Shortcuts: F12, Ctrl+Shift+I/J/C, Ctrl+U, Ctrl+S
+            document.addEventListener('keydown', function (e) {
+                if (
+                    e.keyCode === 123 ||
+                    (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) ||
+                    (e.ctrlKey && (e.keyCode === 85 || e.keyCode === 83))
+                ) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    return false;
+                }
+            });
+        })();
+
+        // ── OBFUSCATED SECURE DATA SOURCE ───────────────────────────
+        function getSecureDataEndpoint() {
+            const _p1 = "https://docs.google.com/";
+            const _p2 = "spreadsheets/d/e/";
+            const _p3 = "2PACX-1vTXuRRWC7i4ltDP41356wVMKAus21quFJqD7YTIJEpjuWTa4bzNylCGDkx3ksyq5j81B48XCArwioDK/";
+            const _p4 = "pub?gid=0&single=true&output=csv";
+            return _p1 + _p2 + _p3 + _p4;
+        }
+        // ──────────────────────────────────────────────────────────
+
+        // ── CSV Parser (handles quoted fields with commas) ─────────
+        function parseCSV(text) {
+            const rows = [];
+            const lines = text.split(/\r?\n/).filter(l => l.trim() !== '');
+            for (const line of lines) {
+                const cols = [];
+                let cur = '', inQuote = false;
+                for (let i = 0; i < line.length; i++) {
+                    const ch = line[i];
+                    if (ch === '"') {
+                        if (inQuote && line[i + 1] === '"') { cur += '"'; i++; }
+                        else inQuote = !inQuote;
+                    } else if (ch === ',' && !inQuote) {
+                        cols.push(cur.trim()); cur = '';
+                    } else {
+                        cur += ch;
+                    }
+                }
+                cols.push(cur.trim());
+                rows.push(cols);
+            }
+            return rows;
+        }
+
+        // ── Normalization Helpers ─────────────────────────────────
+        function normalizeDate(str) {
+            if (!str) return '';
+            const parts = str.trim().split(/[/\-\.]/);
+            if (parts.length === 3) {
+                // Handle YYYY-MM-DD from datepicker input (e.g. 2005-03-15)
+                if (parts[0].length === 4) {
+                    const year = parts[0];
+                    const month = parts[1].padStart(2, '0');
+                    const day = parts[2].padStart(2, '0');
+                    return `${day}/${month}/${year}`;
+                }
+                // Handle DD/MM/YYYY
+                const day = parts[0].padStart(2, '0');
+                const month = parts[1].padStart(2, '0');
+                let year = parts[2];
+                if (year.length === 2) year = '20' + year;
+                return `${day}/${month}/${year}`;
+            }
+            return str.trim();
+        }
+
+        function normalizeName(str) {
+            if (!str) return '';
+            return str.trim().toLowerCase().replace(/\s+/g, ' ');
+        }
+
+        function normalizeKey(str) {
+            if (!str) return '';
+            return str.toLowerCase().replace(/[^a-z0-9]/g, '');
+        }
+
+        // ── DOM References ─────────────────────────────────────────
+        const formCard = document.querySelector('.results-form-card');
+        const form = document.getElementById('results-lookup-form');
+        const submitBtn = document.getElementById('results-submit');
+        const btnText = submitBtn.querySelector('.btn-text');
+        const btnLoader = submitBtn.querySelector('.btn-loader');
+        const errorBox = document.getElementById('results-error');
+        const errorText = document.getElementById('results-error-text');
+
+        const resultCard = document.getElementById('result-card');
+        const resultBanner = document.getElementById('result-banner');
+        const resultIcon = document.getElementById('result-icon');
+        const resultStatusLbl = document.getElementById('result-status-label');
+        const resultStatusVal = document.getElementById('result-status-value');
+        const resultName = document.getElementById('result-name');
+        const resultDob = document.getElementById('result-dob');
+        const resultRoundRow = document.getElementById('result-round-row');
+        const resultRound = document.getElementById('result-round');
+        const resultRemarksRow = document.getElementById('result-remarks-row');
+        const resultRemarks = document.getElementById('result-remarks');
+
+        const resultMessageBox = document.getElementById('result-message-box');
+        const resultMessageBadge = document.getElementById('result-message-badge');
+        const resultMessageTitle = document.getElementById('result-message-title');
+        const resultMessageBody = document.getElementById('result-message-body');
+
+        // ── DOB Modern Date Picker (with Year & Month Dropdowns) ────
+        const dobPicker = typeof flatpickr === 'function' ? flatpickr("#candidate-dob", {
+            dateFormat: "d/m/Y",
+            defaultDate: "01/01/2006",
+            allowInput: true,
+            maxDate: new Date(),
+            disableMobile: true,
+            monthSelectorType: "dropdown",
+            onReady: function (selectedDates, dateStr, instance) {
+                const yearInput = instance.currentYearElement;
+                if (yearInput) {
+                    const select = document.createElement('select');
+                    select.className = 'flatpickr-monthDropdown-months flatpickr-year-dropdown';
+                    select.setAttribute('aria-label', 'Year');
+
+                    // Years list from 2026 down to 2000
+                    const startYr = 2026;
+                    const endYr = 2000;
+                    for (let y = startYr; y >= endYr; y--) {
+                        const opt = document.createElement('option');
+                        opt.value = y;
+                        opt.textContent = y;
+                        if (y === instance.currentYear) opt.selected = true;
+                        select.appendChild(opt);
+                    }
+
+                    const numWrapper = instance.calendarContainer.querySelector('.numInputWrapper');
+                    if (numWrapper) {
+                        numWrapper.querySelectorAll('.arrowUp, .arrowDown').forEach(el => el.remove());
+                    }
+
+                    if (yearInput.parentNode) {
+                        yearInput.parentNode.replaceChild(select, yearInput);
+                    }
+
+                    select.addEventListener('change', (e) => {
+                        instance.changeYear(parseInt(e.target.value, 10));
+                    });
+
+                    instance.currentYearElement = select;
+                }
+            },
+            onMonthChange: function (selectedDates, dateStr, instance) {
+                if (instance.currentYearElement && instance.currentYearElement.tagName === 'SELECT') {
+                    instance.currentYearElement.value = instance.currentYear;
+                }
+            },
+            onYearChange: function (selectedDates, dateStr, instance) {
+                if (instance.currentYearElement && instance.currentYearElement.tagName === 'SELECT') {
+                    instance.currentYearElement.value = instance.currentYear;
+                }
+            }
+        }) : null;
+
+        document.getElementById('dob-picker-btn')?.addEventListener('click', () => {
+            if (dobPicker) dobPicker.open();
+            else document.getElementById('candidate-dob')?.focus();
+        });
+
+        // ── Long Duration Party Popper Confetti Animation (4 Seconds) ──────────
+        function launchLongPartyPopper() {
+            if (typeof confetti === 'function') {
+                const duration = 4200; // 4.2 seconds grand party popper show!
+                const animationEnd = Date.now() + duration;
+
+                // Initial center burst
+                confetti({
+                    particleCount: 120,
+                    spread: 80,
+                    origin: { y: 0.6 },
+                    colors: ['#FF8C00', '#FFD700', '#00CED1', '#32CD64', '#FF4500', '#FFFFFF', '#1E90FF']
+                });
+
+                // Continuous dual-side cannons
+                const interval = setInterval(function () {
+                    const timeLeft = animationEnd - Date.now();
+                    if (timeLeft <= 0) {
+                        return clearInterval(interval);
+                    }
+                    const particleCount = Math.floor(45 * (timeLeft / duration));
+
+                    // Left cannon
+                    confetti({
+                        particleCount: particleCount,
+                        angle: 60,
+                        spread: 60,
+                        origin: { x: 0, y: 0.7 },
+                        colors: ['#FF8C00', '#FFD700', '#00CED1', '#FFFFFF']
+                    });
+                    // Right cannon
+                    confetti({
+                        particleCount: particleCount,
+                        angle: 120,
+                        spread: 60,
+                        origin: { x: 1, y: 0.7 },
+                        colors: ['#32CD64', '#FF4500', '#00FFFF', '#FFD700']
+                    });
+                }, 350);
+            } else {
+                createDOMConfettiLong();
+            }
+        }
+
+        function createDOMConfettiLong() {
+            const container = resultCard || document.body;
+            const colors = ['#FF8C00', '#FFD700', '#00CED1', '#32CD64', '#FF4500', '#00FFFF', '#1E90FF'];
+            for (let i = 0; i < 70; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'confetti-particle';
+                particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                particle.style.left = (5 + Math.random() * 90) + '%';
+                particle.style.top = (5 + Math.random() * 50) + '%';
+                particle.style.animationDelay = (Math.random() * 1.8) + 's';
+                particle.style.animationDuration = (2.2 + Math.random() * 2) + 's';
+                particle.style.transform = `rotate(${Math.random() * 360}deg)`;
+                container.appendChild(particle);
+                setTimeout(() => particle.remove(), 4500);
+            }
+        }
+
+        function setLoading(on) {
+            submitBtn.disabled = on;
+            btnText.style.display = on ? 'none' : 'inline-flex';
+            btnLoader.style.display = on ? 'inline-flex' : 'none';
+        }
+
+        function showError(msg) {
+            errorText.textContent = msg;
+            errorBox.style.display = 'flex';
+            errorBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function hideError() { errorBox.style.display = 'none'; }
+
+        // ── Display Result Card ────────────────────────────────────
+        function displayCandidateResult(data) {
+            const candidateName = (data.name || 'Candidate').trim().toUpperCase();
+            const detailsGrid = document.getElementById('result-details-grid');
+            let hasDetails = false;
+
+            if (data.round && data.round.trim()) {
+                resultRound.textContent = data.round;
+                resultRoundRow.style.display = 'flex';
+                hasDetails = true;
+            } else {
+                resultRoundRow.style.display = 'none';
+            }
+            if (data.remarks && data.remarks.trim()) {
+                resultRemarks.textContent = data.remarks;
+                resultRemarksRow.style.display = 'flex';
+                hasDetails = true;
+            } else {
+                resultRemarksRow.style.display = 'none';
+            }
+
+            if (detailsGrid) {
+                detailsGrid.style.display = hasDetails ? 'grid' : 'none';
+            }
+
+            resultBanner.classList.remove('status-selected', 'status-not-selected');
+            resultMessageBox.classList.remove('status-selected', 'status-not-selected');
+            const status = (data.status || '').toLowerCase().trim();
+
+            if (status === 'selected') {
+                resultBanner.classList.add('status-selected');
+                resultMessageBox.classList.add('status-selected');
+                resultIcon.innerHTML = '<i class="fa fa-trophy" aria-hidden="true"></i>';
+                resultStatusLbl.textContent = 'CONGRATULATIONS';
+                resultStatusVal.style.display = 'block';
+                resultStatusVal.textContent = 'SELECTED';
+
+                resultMessageBadge.style.display = 'inline-flex';
+                resultMessageBadge.innerHTML = '<i class="fa fa-star"></i> OFFICIAL SELECTION LETTER';
+                resultMessageTitle.textContent = 'Welcome to Team Tech Titans!';
+                resultMessageBody.innerHTML = `
+                <p><strong>Dear ${candidateName},</strong></p>
+                <p>After an intense week-long journey filled with meticulous workshops, challenging tasks, and technical evaluations, we are proud to inform you that you have secured your place in <strong>Team Tech Titans</strong>.</p>
+                <p>This is not just a selection—it's a big achievement. Out of many passionate and talented candidates, only a very limited few were selected to join our team. Your persistence, ability to learn, and spirit of collaboration have set you apart.</p>
+                <p>But remember—this is only the beginning. As a Tech Titan, you now step into a world of hard work, deep research, and constant learning. Ahead, you will push boundaries, explore cutting-edge technologies, and grow into a true innovator. The journey will be demanding, but it will also be rewarding beyond measure.</p>
+                <p>Welcome to the Tech Titans family. Wear this achievement with pride, and prepare yourself for the exciting challenges and opportunities that lie ahead.</p>
+                <p class="letter-signature"><strong>Best Wishes,</strong><br><span class="titans-signature">Team Tech Titans</span></p>
+            `;
+            } else {
+                resultBanner.classList.add('status-not-selected');
+                resultMessageBox.classList.add('status-not-selected');
+                resultIcon.innerHTML = '<i class="fa fa-compass" aria-hidden="true"></i>';
+                resultStatusLbl.textContent = 'RECRUITMENT UPDATE';
+                resultStatusVal.style.display = 'none';
+                resultStatusVal.textContent = '';
+
+                resultMessageBadge.style.display = 'none';
+                resultMessageTitle.textContent = 'Thank You for Applying';
+                resultMessageBody.innerHTML = `
+                <p><strong>Dear ${candidateName},</strong></p>
+                <p>Over the past week, you have been an important part of our journey through meticulous workshops, hands-on hardware and software tasks, and team-based challenges. We deeply value the passion, effort, and energy you invested during this time.</p>
+                <p>After careful consideration, we regret to inform you that you have not been selected for the final Tech Titans team this season. The decision was not easy—there were only a very limited number of spots available, and due to space constraints in our lab for daily work, we could not accommodate everyone.</p>
+                <p>Please understand that our motto is not to reject anyone, but to ensure that those selected have the resources and space they need to work effectively. This does not mean the end of your journey with us—we strongly encourage you to keep building, learning, and sharpening your technical skills, and we warmly invite you to apply again in our future recruitment drives.</p>
+                <p class="letter-signature"><strong>Warm Regards,</strong><br><span class="titans-signature">Team Tech Titans</span></p>
+            `;
+            }
+
+            // Hide hero header & form card, then show result card smoothly with breathing room below navbar
+            const heroSection = document.querySelector('.results-hero');
+            if (heroSection) heroSection.style.display = 'none';
+
+            formCard.style.display = 'none';
+            resultCard.style.display = 'block';
+            resultCard.classList.remove('active');
+            void resultCard.offsetWidth;
+            resultCard.classList.add('active');
+
+            // Scroll smoothly so the top of result-card sits comfortably below the navbar
+            const navHeight = document.querySelector('.navbar')?.offsetHeight || 75;
+            const cardTop = resultCard.getBoundingClientRect().top + window.pageYOffset;
+            window.scrollTo({ top: Math.max(0, cardTop - navHeight - 45), behavior: 'smooth' });
+
+            // Launch long duration Party Popper confetti if selected!
+            if (status === 'selected') {
+                setTimeout(launchLongPartyPopper, 200);
+            }
+        }
+
+        // ── Form Submit ────────────────────────────────────────────
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            hideError();
+
+            const dobRaw = document.getElementById('candidate-dob').value.trim();
+            const motherName = document.getElementById('mother-name').value.trim();
+
+            if (!dobRaw || !motherName) {
+                showError('Please fill in both fields: Date of Birth and Mother\'s Name.');
+                return;
+            }
+
+            const targetDob = normalizeDate(dobRaw);
+            if (!/^\d{2}\/\d{2}\/\d{4}$/.test(targetDob)) {
+                showError('Please select a valid Date of Birth.');
+                return;
+            }
+            const targetUrl = getSecureDataEndpoint();
+            if (!targetUrl) {
+                showError('Results are not published yet.');
+                return;
+            }
+
+            setLoading(true);
+            try {
+                let res;
+                try {
+                    res = await fetch(targetUrl);
+                } catch (fetchErr) {
+                    res = await fetch(targetUrl, { cache: 'no-store' });
+                }
+                if (!res.ok) throw new Error('fetch_failed');
+                const csvText = await res.text();
+                const rows = parseCSV(csvText);
+
+                if (rows.length < 2) {
+                    showError('The results sheet is empty. Please contact the recruitment team.');
+                    setLoading(false);
+                    return;
+                }
+
+                const rawHdrs = rows[0].map(h => normalizeKey(h));
+                const ci = {
+                    name: rawHdrs.findIndex(h => h.includes('name') && !h.includes('mother')),
+                    dob: rawHdrs.findIndex(h => h.includes('dob') || h.includes('birth')),
+                    motherName: rawHdrs.findIndex(h => h.includes('mother')),
+                    status: rawHdrs.findIndex(h => h.includes('status')),
+                    round: rawHdrs.findIndex(h => h.includes('round')),
+                    remarks: rawHdrs.findIndex(h => h.includes('remark')),
+                };
+
+                const nameIdx = ci.name >= 0 ? ci.name : 0;
+                const dobIdx = ci.dob >= 0 ? ci.dob : 1;
+                const motherIdx = ci.motherName >= 0 ? ci.motherName : 2;
+                const statusIdx = ci.status >= 0 ? ci.status : 3;
+
+                const targetMother = normalizeName(motherName);
+
+                let matched = null;
+                let dobFound = false;
+
+                for (let i = 1; i < rows.length; i++) {
+                    const r = rows[i];
+                    if (!r || r.length === 0) continue;
+
+                    const rowDob = normalizeDate(r[dobIdx] || '');
+                    const rowMother = normalizeName(r[motherIdx] || '');
+
+                    if (rowDob === targetDob) {
+                        dobFound = true;
+                        if (rowMother === targetMother) {
+                            matched = {
+                                name: (r[nameIdx] || '').trim(),
+                                dob: targetDob,
+                                status: (r[statusIdx] || '').trim(),
+                                round: ci.round >= 0 ? (r[ci.round] || '').trim() : '',
+                                remarks: ci.remarks >= 0 ? (r[ci.remarks] || '').trim() : '',
+                            };
+                            break;
+                        }
+                    }
+                }
+
+                if (!matched) {
+                    showError(dobFound
+                        ? 'Mother\'s Name does not match our records. Please check your spelling.'
+                        : 'No record found for this Date of Birth. Please verify your details or contact the recruitment team.'
+                    );
+                    setLoading(false);
+                    return;
+                }
+
+                displayCandidateResult(matched);
+
+            } catch (err) {
+                console.error('Sheet fetch error:', err);
+                showError('Unable to load results. Please check your internet connection and try again.');
+            } finally {
+                setLoading(false);
+            }
+        });
+    </script>
+
+    <script src="js/script.js"></script>
+</body>
+
+</html>
