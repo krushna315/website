@@ -94,6 +94,114 @@
             }
         }
 
+        /* ─────────────────────────────
+           SECRET GATEKEEPER
+        ───────────────────────────── */
+        #tl-gatekeeper {
+            position: fixed;
+            inset: 0;
+            background: #080808;
+            z-index: 99999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            text-align: center;
+            transition: opacity 0.8s ease, visibility 0.8s;
+        }
+
+        .tl-gate-box {
+            background: rgba(30,144,255,0.05);
+            border: 1px solid rgba(0,206,209,0.2);
+            padding: 3rem 2.5rem;
+            border-radius: 20px;
+            max-width: 400px;
+            width: 100%;
+            box-shadow: 0 0 30px rgba(0,206,209,0.1);
+        }
+
+        .tl-gate-icon {
+            font-size: 2.5rem;
+            color: var(--teal-cyan-start);
+            margin-bottom: 1rem;
+        }
+
+        .tl-gate-title {
+            font-family: 'Orbitron', monospace;
+            color: #fff;
+            margin-bottom: 0.5rem;
+            font-size: 1.5rem;
+        }
+
+        .tl-gate-desc {
+            color: rgba(255,255,255,0.5);
+            font-size: 0.85rem;
+            margin-bottom: 2rem;
+        }
+
+        .tl-gate-input {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(0,0,0,0.5);
+            border: 1px solid rgba(0,206,209,0.3);
+            border-radius: 8px;
+            color: #fff;
+            font-family: 'Orbitron', monospace;
+            font-size: 1.1rem;
+            text-align: center;
+            outline: none;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .tl-gate-input:focus {
+            border-color: var(--teal-cyan-start);
+            box-shadow: 0 0 15px rgba(0,206,209,0.3);
+        }
+
+        .tl-gate-input.error {
+            border-color: #ff4500;
+            box-shadow: 0 0 15px rgba(255,69,0,0.3);
+            animation: shake 0.4s;
+        }
+
+        .tl-gate-btn {
+            width: 100%;
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: 'Orbitron', monospace;
+            font-weight: 700;
+            letter-spacing: 1px;
+            cursor: pointer;
+            border: none;
+            background: linear-gradient(135deg, #1E90FF, #00CED1);
+            color: #fff;
+            text-transform: uppercase;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .tl-gate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(30,144,255,0.4);
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-8px); }
+            40%, 80% { transform: translateX(8px); }
+        }
+
+        /* Hide main content initially to prevent peeking */
+        body.locked {
+            overflow: hidden;
+        }
+        body.locked main, body.locked nav, body.locked footer {
+            opacity: 0;
+            pointer-events: none;
+        }
+
         .tl-hero-content {
             position: relative;
             z-index: 2;
@@ -515,7 +623,18 @@
     </style>
 </head>
 
-<body>
+<body class="locked">
+    <!-- ══════════════════ SECRET GATEKEEPER ══════════════════ -->
+    <div id="tl-gatekeeper">
+        <div class="tl-gate-box">
+            <i class="fa fa-lock tl-gate-icon"></i>
+            <h3 class="tl-gate-title">Titans Only</h3>
+            <p class="tl-gate-desc">Enter the secret code to view the Titans League 2026 internal portal.</p>
+            <input type="password" id="tl-code-input" class="tl-gate-input" placeholder="ENTER CODE" autocomplete="off">
+            <button id="tl-unlock-btn" class="tl-gate-btn">Unlock</button>
+        </div>
+    </div>
+
     <div id="scroll-progress-bar"></div>
     <div class="custom-cursor-dot"></div>
     <div class="custom-cursor-ring"></div>
@@ -565,8 +684,8 @@
                     <button id="arena-toggle-btn" class="tl-btn tl-btn-outline" onclick="toggleArena()"><i
                             class="fa fa-cube" id="arena-btn-icon"></i> <span id="arena-btn-text">The
                             Arena</span></button>
-                    <a href="Titans_League_2026_Rulebook_v1.pdf" id="rulebook-link"
-                        download="Titans_League_2026_Rulebook_v1.pdf" class="tl-btn tl-btn-primary">
+                    <a href="https://drive.google.com/file/d/1fo8hDicIE3miGENEZWHMTWFDRujzuGka/view?usp=drive_link" id="rulebook-link"
+                        target="_blank" class="tl-btn tl-btn-primary">
                         <i class="fa fa-book"></i> Access Rulebook
                     </a>
                 </div>
@@ -622,6 +741,47 @@
     <script src="js/script.js"></script>
 
     <script>
+        /* ── Secret Gatekeeper Logic ── */
+        const SECRET_CODE = "TITANS2026"; // The secret access code!
+
+        const gatekeeper = document.getElementById('tl-gatekeeper');
+        const codeInput = document.getElementById('tl-code-input');
+        const unlockBtn = document.getElementById('tl-unlock-btn');
+
+        function attemptUnlock() {
+            const enteredCode = codeInput.value.trim().toUpperCase();
+            if (enteredCode === SECRET_CODE) {
+                // Success!
+                gatekeeper.style.opacity = '0';
+                setTimeout(() => {
+                    gatekeeper.style.visibility = 'hidden';
+                    document.body.classList.remove('locked');
+                    // Reveal the main content with a fade in
+                    document.querySelector('main').style.transition = 'opacity 1s ease';
+                    document.querySelector('nav').style.transition = 'opacity 1s ease';
+                    document.querySelector('footer').style.transition = 'opacity 1s ease';
+                    document.querySelector('main').style.opacity = '1';
+                    document.querySelector('nav').style.opacity = '1';
+                    document.querySelector('footer').style.opacity = '1';
+                }, 800);
+            } else {
+                // Wrong code
+                codeInput.classList.add('error');
+                codeInput.value = '';
+                codeInput.placeholder = 'INVALID CODE';
+                setTimeout(() => {
+                    codeInput.classList.remove('error');
+                    codeInput.placeholder = 'ENTER CODE';
+                }, 1000);
+            }
+        }
+
+        unlockBtn.addEventListener('click', attemptUnlock);
+        codeInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') attemptUnlock();
+        });
+
+
         /* ── Arena reveal toggle ── */
         function toggleArena() {
             const arena = document.getElementById('arena');
