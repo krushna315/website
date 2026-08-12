@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TITANS LEAGUE 2026 — Tech Titans</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <style>
+        /* ── TITANS LEAGUE ── */
+
+        .tl-wrap {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 2.5rem;
+        }
+
+        /* ─────────────────────────────
+           HERO
+        ───────────────────────────── */
+        .tl-hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 100px 2rem 100px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Ambient glow */
+        .tl-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 70% 55% at 50% 40%, rgba(0, 206, 209, 0.08) 0%, transparent 65%),
+                radial-gradient(ellipse 40% 50% at 10% 85%, rgba(255, 140, 0, 0.06) 0%, transparent 55%),
+                radial-gradient(ellipse 40% 50% at 90% 85%, rgba(30, 144, 255, 0.05) 0%, transparent 55%);
+            pointer-events: none;
+        }
+
+        /* Mascot — left decoration */
+        .tl-mascot-left {
+            position: absolute;
+            left: -30px;
+            bottom: 0;
+            height: 75%;
+            max-height: 620px;
+            opacity: 0.18;
+            filter: drop-shadow(0 0 40px rgba(30, 144, 255, 0.3));
+            pointer-events: none;
+            z-index: 0;
+            transition: opacity 0.4s;
+        }
+
+        /* Mascot — right decoration */
+        .tl-mascot-right {
+            position: absolute;
+            right: -30px;
+            bottom: 0;
+            height: 75%;
+            max-height: 620px;
+            opacity: 0.18;
+            filter: drop-shadow(0 0 40px rgba(255, 20, 147, 0.25));
+            pointer-events: none;
+            z-index: 0;
+            transition: opacity 0.4s;
+        }
+
+        .tl-hero:hover .tl-mascot-left,
+        .tl-hero:hover .tl-mascot-right {
+            opacity: 0.28;
+        }
+
+        .tl-hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+        }
+
+        .tl-logo-img {
+            max-width: 520px;
+            width: 85%;
+            filter: drop-shadow(0 0 28px rgba(0, 206, 209, 0.4)) drop-shadow(0 0 55px rgba(255, 140, 0, 0.14));
+            margin-bottom: 1.8rem;
+            animation: tl-float 5s ease-in-out infinite;
+        }
+
+        @keyframes tl-float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-12px);
+            }
+        }
+
+        .tl-tagline {
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(0.65rem, 1.4vw, 0.85rem);
+            color: var(--teal-cyan-start);
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .tl-hero-title {
+            font-family: 'Orbitron', monospace;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.2rem;
+            /* Reset transparent fill so children can set their own colors */
+            background: none;
+            -webkit-text-fill-color: unset;
+        }
+
+        /* "TITANS" — large gold */
+        .tl-theme-top {
+            display: inline-block;
+            font-size: clamp(2.5rem, 7vw, 5rem);
+            letter-spacing: 6px;
+            background: linear-gradient(135deg, #FFD700, #FF8C00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-transform: uppercase;
+        }
+
+        /* ":" separator — dim */
+        .tl-theme-colon {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            color: rgba(255, 255, 255, 0.25);
+            -webkit-text-fill-color: rgba(255, 255, 255, 0.25);
+            margin-left: 4px;
+        }
+
+        /* "Rise of the Core" — smaller cyan */
+        .tl-theme-sub {
+            display: block;
+            font-size: clamp(1rem, 2.8vw, 1.8rem);
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, var(--teal-cyan-start), #1E90FF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-top: 0.2rem;
+        }
+
+        .tl-hero-sub {
+            color: rgba(255, 255, 255, 0.65);
+            font-size: 1.05rem;
+            max-width: 520px;
+            margin: 0 auto 2.5rem;
+            line-height: 1.75;
+        }
+
+        .tl-cta-row {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .tl-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.55rem;
+            padding: 0.88rem 1.9rem;
+            border-radius: 50px;
+            font-family: 'Orbitron', monospace;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .tl-btn-primary {
+            background: linear-gradient(135deg, #1E90FF, #00CED1);
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(30, 144, 255, 0.38);
+        }
+
+        .tl-btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 28px rgba(30, 144, 255, 0.55);
+        }
+
+        .tl-btn-outline {
+            background: transparent;
+            color: var(--warm-gold);
+            border: 2px solid var(--golden-orange-start);
+        }
+
+        .tl-btn-outline:hover {
+            background: rgba(255, 140, 0, 0.08);
+            transform: translateY(-3px);
+        }
+
+        .tl-scroll-hint {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--teal-cyan-start);
+            font-size: 1.4rem;
+            text-decoration: none;
+            animation: tl-bounce 2s ease-in-out infinite;
+            z-index: 5;
+        }
+
+        @keyframes tl-bounce {
+
+            0%,
+            100% {
+                transform: translateX(-50%) translateY(0);
+                opacity: 0.85;
+            }
+
+            50% {
+                transform: translateX(-50%) translateY(8px);
+                opacity: 0.35;
+            }
+        }
+
+        /* ─────────────────────────────
+           COUNTDOWN
+        ───────────────────────────── */
+        .tl-countdown {
+            background: rgba(0, 0, 0, 0.55);
+            border-top: 1px solid rgba(0, 206, 209, 0.25);
+            border-bottom: 1px solid rgba(0, 206, 209, 0.25);
+            padding: 1.8rem 2rem;
+            text-align: center;
+        }
+
+        .tl-cd-label {
+            font-family: 'Orbitron', monospace;
+            font-size: 0.62rem;
+            color: var(--teal-cyan-start);
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            margin-bottom: 1.1rem;
+        }
+
+        .tl-cd-row {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 1.2rem;
+            flex-wrap: wrap;
+        }
+
+        .tl-unit {
+            text-align: center;
+        }
+
+        .tl-unit-num {
+            display: block;
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 900;
+            background: linear-gradient(135deg, #FFD700, #FF8C00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+            min-width: 60px;
+        }
+
+        .tl-unit-lbl {
+            font-size: 0.6rem;
+            color: rgba(255, 255, 255, 0.42);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-top: 0.3rem;
+        }
+
+        .tl-colon {
+            font-family: 'Orbitron', monospace;
+            font-size: 2.6rem;
+            color: rgba(0, 206, 209, 0.4);
+            line-height: 1;
+        }
+
+        /* ─────────────────────────────
+           SECTION BASE
+        ───────────────────────────── */
+        .tl-section {
+            padding: 90px 0;
+        }
+
+        .tl-section-dark {
+            padding: 90px 0;
+            background: rgba(0, 0, 0, 0.28);
+            border-top: 1px solid rgba(0, 206, 209, 0.08);
+            border-bottom: 1px solid rgba(0, 206, 209, 0.08);
+        }
+
+        .tl-eyebrow {
+            display: block;
+            font-family: 'Orbitron', monospace;
+            font-size: 0.62rem;
+            color: var(--teal-cyan-start);
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            margin-bottom: 0.55rem;
+        }
+
+        .tl-h2 {
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+            font-weight: 900;
+            color: #fff;
+            line-height: 1.15;
+            margin-bottom: 0.75rem;
+        }
+
+        .tl-h2 em {
+            font-style: normal;
+            background: linear-gradient(135deg, var(--teal-cyan-start), #1E90FF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .tl-rule {
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--teal-cyan-start), transparent);
+            border-radius: 2px;
+            margin-bottom: 2.5rem;
+        }
+
+        /* ─────────────────────────────
+           ARENA
+        ───────────────────────────── */
+        .tl-arena-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        @media (max-width: 680px) {
+            .tl-arena-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .tl-arena-item {
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid rgba(0, 206, 209, 0.2);
+            position: relative;
+            transition: box-shadow 0.3s, transform 0.3s;
+        }
+
+        .tl-arena-item:hover {
+            box-shadow: 0 14px 36px rgba(0, 206, 209, 0.22);
+            transform: translateY(-3px);
+        }
+
+        .tl-arena-item img {
+            width: 100%;
+            display: block;
+        }
+
+        .tl-arena-cap {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.88), transparent);
+            padding: 1.4rem 1rem 0.75rem;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.75);
+        }
+
+        .tl-arena-blueprint {
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 140, 0, 0.22);
+            position: relative;
+            transition: box-shadow 0.3s, transform 0.3s;
+        }
+
+        .tl-arena-blueprint:hover {
+            box-shadow: 0 14px 36px rgba(255, 140, 0, 0.18);
+            transform: translateY(-3px);
+        }
+
+        .tl-arena-blueprint img {
+            width: 100%;
+            display: block;
+        }
+
+        .tl-arena-blueprint-cap {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+            padding: 1.4rem 1.2rem 0.8rem;
+            font-family: 'Orbitron', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--golden-orange-start);
+        }
+
+        /* ─────────────────────────────
+           RULEBOOK
+        ───────────────────────────── */
+        .tl-rulebook-wrap {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, rgba(30, 144, 255, 0.09), rgba(0, 206, 209, 0.07));
+            border: 1px solid rgba(0, 206, 209, 0.22);
+            border-radius: 22px;
+            padding: 4rem 3rem;
+            text-align: center;
+        }
+
+        /* Mascot silhouettes inside rulebook */
+        .tl-rb-mascot-l {
+            position: absolute;
+            left: -20px;
+            bottom: -10px;
+            height: 90%;
+            opacity: 0.09;
+            pointer-events: none;
+            filter: blur(1px);
+        }
+
+        .tl-rb-mascot-r {
+            position: absolute;
+            right: -20px;
+            bottom: -10px;
+            height: 90%;
+            opacity: 0.09;
+            pointer-events: none;
+            filter: blur(1px);
+        }
+
+        .tl-rb-icon {
+            position: relative;
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #1E90FF, #00CED1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin: 0 auto 1.5rem;
+            box-shadow: 0 0 26px rgba(30, 144, 255, 0.38);
+            z-index: 1;
+        }
+
+        .tl-rulebook-wrap h2 {
+            position: relative;
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(1.4rem, 3vw, 1.9rem);
+            color: #fff;
+            margin-bottom: 0.8rem;
+            z-index: 1;
+        }
+
+        .tl-rulebook-wrap p {
+            position: relative;
+            color: rgba(255, 255, 255, 0.62);
+            font-size: 0.95rem;
+            max-width: 460px;
+            margin: 0 auto 2rem;
+            line-height: 1.75;
+            z-index: 1;
+        }
+
+        .tl-rulebook-wrap a {
+            position: relative;
+            z-index: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="scroll-progress-bar"></div>
+    <div class="custom-cursor-dot"></div>
+    <div class="custom-cursor-ring"></div>
+    <div class="bg-animation"></div>
+    <div class="geometry geometry-1"></div>
+    <div class="geometry geometry-2"></div>
+    <div class="geometry geometry-3"></div>
+
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">Tech Titans</a>
+            <ul class="nav-links" id="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="team.html">Team</a></li>
+                <li><a href="management.html">Management</a></li>
+                <li><a href="achievements.html">Achievements</a></li>
+                <li><a href="results.html">Results</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <button class="mobile-menu-toggle" id="mobile-menu-button" aria-label="Toggle menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <main>
+
+        <!-- ══════════════════ HERO ══════════════════ -->
+        <section class="tl-hero">
+            <!-- Mascots as hero decorations -->
+            <img src="images/blue mashcot.png" alt="" class="tl-mascot-left" aria-hidden="true">
+            <img src="images/pink mashcot.png" alt="" class="tl-mascot-right" aria-hidden="true">
+
+            <div class="tl-hero-content">
+                <img src="images/titan legue logo.png" alt="Titans League 2026" class="tl-logo-img reveal">
+                <p class="tl-tagline reveal delay-1">Official Robotics League · Team Tech Titans</p>
+                <h1 class="tl-hero-title reveal delay-1">
+                    <span class="tl-theme-top">Titans</span>
+                    <br>
+                    <span class="tl-theme-sub">Rise of the Core</span>
+                </h1>
+                <p class="tl-hero-sub reveal delay-2">
+                    The theme has been set. The stakes are real. Build, compete, and rise —
+                    Titans League 2026 begins now.
+                </p>
+                <div class="tl-cta-row reveal delay-2">
+                    <button id="arena-toggle-btn" class="tl-btn tl-btn-outline" onclick="toggleArena()"><i
+                            class="fa fa-cube" id="arena-btn-icon"></i> <span id="arena-btn-text">The
+                            Arena</span></button>
+                    <a href="Titans_League_2026_Rulebook_v1.pdf" id="rulebook-link"
+                        download="Titans_League_2026_Rulebook_v1.pdf" class="tl-btn tl-btn-primary">
+                        <i class="fa fa-book"></i> Access Rulebook
+                    </a>
+                </div>
+            </div>
+
+            <a href="#arena" class="tl-scroll-hint"><i class="fa fa-chevron-down"></i></a>
+        </section>
+
+        <!-- ══════════════════ ARENA (hidden by default) ══════════════════ -->
+        <section id="arena" class="tl-section" style="display:none; overflow:hidden;">
+            <div class="tl-wrap">
+                <span class="tl-eyebrow">Competition Venue</span>
+                <h2 class="tl-h2">The <em>Arena</em></h2>
+                <div class="tl-rule"></div>
+
+                <div class="tl-arena-grid">
+                    <div class="tl-arena-item">
+                        <img src="images/FINAL ISOMETRI (1).png" alt="Arena Isometric View">
+                        <div class="tl-arena-cap"><i class="fa fa-cube"></i> &nbsp;3D Isometric View</div>
+                    </div>
+                    <div class="tl-arena-item">
+                        <img src="images/FINAL TOP (1).png" alt="Arena Top View">
+                        <div class="tl-arena-cap"><i class="fa fa-arrows-alt"></i> &nbsp;Top / Plan View</div>
+                    </div>
+                </div>
+
+                <div class="tl-arena-blueprint">
+                    <img src="images/TITANS LEAGUE 2026 ARENA DIMENSIONSW2.jpg (1).jpeg"
+                        alt="Arena Dimensions Blueprint">
+                    <div class="tl-arena-blueprint-cap">
+                        <i class="fa fa-expand"></i> &nbsp;Official Dimensions &amp; Blueprint
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-text">
+                    <p>© 2026 Tech Titans — Titans League is an exclusive event for Team Tech Titans members.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <button id="back-to-top" aria-label="Back to top"><i class="fa fa-chevron-up"></i></button>
+
+    <script src="js/script.js"></script>
+
+    <script>
+        /* ── Arena reveal toggle ── */
+        function toggleArena() {
+            const arena = document.getElementById('arena');
+            const btnText = document.getElementById('arena-btn-text');
+            const btnIcon = document.getElementById('arena-btn-icon');
+            const isHidden = arena.style.display === 'none';
+
+            if (isHidden) {
+                arena.style.display = 'block';
+                // Animate in
+                arena.style.opacity = '0';
+                arena.style.transform = 'translateY(30px)';
+                arena.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => {
+                        arena.style.opacity = '1';
+                        arena.style.transform = 'translateY(0)';
+                    });
+                });
+                setTimeout(() => arena.scrollIntoView({ behavior: 'smooth', block: 'start' }), 80);
+                btnText.textContent = 'Hide Arena';
+                btnIcon.className = 'fa fa-times';
+            } else {
+                arena.style.opacity = '0';
+                arena.style.transform = 'translateY(30px)';
+                setTimeout(() => { arena.style.display = 'none'; }, 450);
+                btnText.textContent = 'The Arena';
+                btnIcon.className = 'fa fa-cube';
+            }
+        }
+    </script>
+</body>
+
+</html>
