@@ -77,12 +77,20 @@
         .tl-hero:hover .tl-mascot-right {
             opacity: 0.28;
         }
-
         @media (max-width: 768px) {
-            .tl-mascot-left,
+            .tl-mascot-left {
+                height: 45%;
+                bottom: auto;
+                top: 0;
+                left: -40px;
+                opacity: 0.15;
+            }
             .tl-mascot-right {
-                opacity: 0.05 !important;
-                height: 50%;
+                height: 45%;
+                top: auto;
+                bottom: 0;
+                right: -40px;
+                opacity: 0.15;
             }
         }
 
