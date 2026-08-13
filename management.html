@@ -103,8 +103,8 @@
                         <div class="alumni-batch">Batch of '23</div>
                         <p class="alumni-current-role">CAD Designer | Roboticist | Automobile | Mechanical Engineering </p>
                     </div>
-                    <div style="grid-column: 1 / -1; display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; width: 100%;">
-                        <div class="alumni-member reveal delay-3" style="flex: 1 1 250px; max-width: 350px;">
+                    <div id="centered-alumni" style="grid-column: 1 / -1; display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; width: 100%;">
+                        <div class="alumni-member reveal delay-3" style="width: 100%;">
                             <div class="member-avatar">
                                 <img src="images/vihar bendle.jpg" alt="Vihar Bendale" draggable="false">
                             </div>
@@ -112,7 +112,7 @@
                             <div class="alumni-batch">Batch of '23</div>
                             <p class="alumni-current-role">Cad Dessigner</p>
                         </div>
-                        <div class="alumni-member reveal delay-4" style="flex: 1 1 250px; max-width: 350px;">
+                        <div class="alumni-member reveal delay-4" style="width: 100%;">
                             <div class="member-avatar">
                                 <img src="images/Dhiren.JPG" alt="Dhiren Sawalakhe" draggable="false">
                             </div>
@@ -159,5 +159,24 @@
     <button id="back-to-top" aria-label="Back to top"><i class="fa fa-chevron-up"></i></button>
 
     <script src="js/script.js"></script>
+    <script>
+        // Sync centered card widths with the main grid cards
+        function syncCardWidths() {
+            const referenceCard = document.querySelector('.alumni-grid > .alumni-member:not(.alumni-member-featured)');
+            const centeredCards = document.querySelectorAll('#centered-alumni .alumni-member');
+            
+            if (referenceCard && centeredCards.length) {
+                const width = referenceCard.getBoundingClientRect().width;
+                centeredCards.forEach(card => {
+                    card.style.flex = `0 0 ${width}px`;
+                    card.style.maxWidth = `${width}px`;
+                });
+            }
+        }
+        
+        window.addEventListener('resize', syncCardWidths);
+        window.addEventListener('load', syncCardWidths);
+        setTimeout(syncCardWidths, 100);
+    </script>
 </body>
 </html>
