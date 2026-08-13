@@ -77,6 +77,7 @@
         .tl-hero:hover .tl-mascot-right {
             opacity: 0.28;
         }
+
         @media (max-width: 768px) {
             .tl-mascot-left {
                 height: 45%;
@@ -85,6 +86,7 @@
                 left: -40px;
                 opacity: 0.15;
             }
+
             .tl-mascot-right {
                 height: 45%;
                 top: auto;
@@ -119,15 +121,22 @@
             position: absolute;
             width: 500px;
             height: 500px;
-            background: radial-gradient(circle, rgba(0,206,209,0.15) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(0, 206, 209, 0.15) 0%, transparent 70%);
             animation: pulseGlow 6s infinite alternate;
             pointer-events: none;
             z-index: -1;
         }
 
         @keyframes pulseGlow {
-            0% { transform: scale(1); opacity: 0.5; }
-            100% { transform: scale(1.3); opacity: 1; }
+            0% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+
+            100% {
+                transform: scale(1.3);
+                opacity: 1;
+            }
         }
 
         .tl-gate-box {
@@ -139,7 +148,7 @@
             border-radius: 24px;
             max-width: 420px;
             width: 100%;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.6), inset 0 0 20px rgba(255,255,255,0.02);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(255, 255, 255, 0.02);
             position: relative;
             overflow: hidden;
         }
@@ -150,7 +159,7 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 1.2rem;
-            filter: drop-shadow(0 0 10px rgba(255,140,0,0.3));
+            filter: drop-shadow(0 0 10px rgba(255, 140, 0, 0.3));
         }
 
         .tl-gate-title {
@@ -164,7 +173,7 @@
         }
 
         .tl-gate-desc {
-            color: rgba(255,255,255,0.6);
+            color: rgba(255, 255, 255, 0.6);
             font-size: 0.9rem;
             margin-bottom: 2.5rem;
             line-height: 1.6;
@@ -173,8 +182,8 @@
         .tl-gate-input {
             width: 100%;
             padding: 1.2rem;
-            background: rgba(0,0,0,0.4);
-            border: 1px solid rgba(255,255,255,0.12);
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.12);
             border-radius: 12px;
             color: #fff;
             font-family: 'Orbitron', monospace;
@@ -184,26 +193,26 @@
             margin-bottom: 1.5rem;
             letter-spacing: 3px;
             transition: all 0.3s ease;
-            box-shadow: inset 0 2px 10px rgba(0,0,0,0.5);
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.5);
         }
 
         .tl-gate-input::placeholder {
-            color: rgba(255,255,255,0.2);
+            color: rgba(255, 255, 255, 0.2);
             letter-spacing: 2px;
         }
 
         .tl-gate-input:focus {
             border-color: #00CED1;
-            background: rgba(0,206,209,0.05);
-            box-shadow: 0 0 20px rgba(0,206,209,0.3), inset 0 2px 10px rgba(0,0,0,0.5);
+            background: rgba(0, 206, 209, 0.05);
+            box-shadow: 0 0 20px rgba(0, 206, 209, 0.3), inset 0 2px 10px rgba(0, 0, 0, 0.5);
         }
 
         .tl-gate-input.error {
             border-color: #ff4500;
             color: #ff4500;
-            background: rgba(255,69,0,0.05);
-            box-shadow: 0 0 20px rgba(255,69,0,0.3);
-            animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both;
+            background: rgba(255, 69, 0, 0.05);
+            box-shadow: 0 0 20px rgba(255, 69, 0, 0.3);
+            animation: shake 0.4s cubic-bezier(.36, .07, .19, .97) both;
         }
 
         .tl-gate-btn {
@@ -228,7 +237,10 @@
         .tl-gate-btn::before {
             content: '';
             position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
             background: linear-gradient(135deg, #00CED1, #1E90FF);
             z-index: -1;
             transition: opacity 0.3s ease;
@@ -241,20 +253,35 @@
 
         .tl-gate-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(30,144,255,0.4);
+            box-shadow: 0 10px 25px rgba(30, 144, 255, 0.4);
         }
 
         @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            20%, 60% { transform: translateX(-8px); }
-            40%, 80% { transform: translateX(8px); }
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            20%,
+            60% {
+                transform: translateX(-8px);
+            }
+
+            40%,
+            80% {
+                transform: translateX(8px);
+            }
         }
 
         /* Hide main content initially to prevent peeking */
         body.locked {
             overflow: hidden;
         }
-        body.locked main, body.locked nav, body.locked footer {
+
+        body.locked main,
+        body.locked nav,
+        body.locked footer {
             opacity: 0;
             pointer-events: none;
         }
@@ -739,14 +766,13 @@
                 </p>
                 <div class="tl-cta-row reveal delay-2">
                     <button id="arena-toggle-btn" class="tl-btn tl-btn-outline" onclick="toggleArena()"><i
-                            class="fa fa-cube" id="arena-btn-icon"></i> <span id="arena-btn-text">The
-                            Arena</span></button>
+                            class="fa fa-cube" id="arena-btn-icon"></i> <span id="arena-btn-text"> Arena</span></button>
                     <a href="https://a360.co/3SvlF7v" target="_blank" class="tl-btn tl-btn-outline">
                         <i class="fa fa-cubes"></i> Arena CAD
                     </a>
-                    <a href="https://drive.google.com/file/d/1LrpNKs3CEVyJBPlVi4Wf7gg-FaEfj9m0/view?usp=sharing" id="rulebook-link"
-                        target="_blank" class="tl-btn tl-btn-primary">
-                        <i class="fa fa-book"></i> Access Rulebook
+                    <a href="https://drive.google.com/file/d/1LrpNKs3CEVyJBPlVi4Wf7gg-FaEfj9m0/view?usp=sharing"
+                        id="rulebook-link" target="_blank" class="tl-btn tl-btn-primary">
+                        <i class="fa fa-book"></i> Rulebook
                     </a>
                     <a href="#" id="faq-link" target="_blank" class="tl-btn tl-btn-primary">
                         <i class="fa fa-question-circle"></i> FAQ
@@ -840,7 +866,7 @@
         }
 
         unlockBtn.addEventListener('click', attemptUnlock);
-        codeInput.addEventListener('keypress', function(e) {
+        codeInput.addEventListener('keypress', function (e) {
             if (e.key === 'Enter') attemptUnlock();
         });
 
